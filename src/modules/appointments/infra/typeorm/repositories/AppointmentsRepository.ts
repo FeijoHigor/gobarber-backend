@@ -6,7 +6,7 @@ import { AppDataSource } from "@shared/infra/typeorm";
 import ICreateAppointmentDTO from "@modules/appointments/dtos/ICreateAppointmentDTO";
 
 // aqui tem acesso ao banco de dados
-class AppointmentRepository implements IAppointmentsRepository {
+class AppointmentsRepository implements IAppointmentsRepository {
     private ormRepository = AppDataSource.getRepository(Appointment)
 
     public async all(): Promise<Appointment[]> {
@@ -35,4 +35,4 @@ class AppointmentRepository implements IAppointmentsRepository {
     }
 }
 
-export default AppointmentRepository
+export default AppointmentsRepository

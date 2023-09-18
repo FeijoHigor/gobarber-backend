@@ -14,7 +14,7 @@ interface Request {
 @injectable()
 class CreateUserService {
     constructor(
-        @inject('UserRepository')
+        @inject('UsersRepository')
         private usersRepository: IUserRepository
     ) {}
 
@@ -33,7 +33,6 @@ class CreateUserService {
             password: hashedPassword
         })
         
-        delete user.password
         return user
     }
 }
