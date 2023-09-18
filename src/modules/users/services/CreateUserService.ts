@@ -1,5 +1,5 @@
 import User from "@modules/users/infra/typeorm/entities/User"
-import { hash } from "bcrypt"
+import IHashProvider from "../providers/models/IHashProvider"
 import AppError from "@shared/errors/AppError"
 import IUserRepository from "../repositories/IUsersRepository"
 
@@ -15,7 +15,10 @@ interface Request {
 class CreateUserService {
     constructor(
         @inject('UsersRepository')
-        private usersRepository: IUserRepository
+        private usersRepository: IUserRepository,
+
+        @inject('HashProvider')
+        private hashProvider: IHashProvider
     ) {}
 
     public async execute({ name, email, password}: Request): Promise<User> {
@@ -25,8 +28,7 @@ class CreateUserService {
             throw new AppError(`Email adress already used.`)
         }
 
-        const hashedPassword = await hash(password, 8)
-
+        const hashedPassword = await this.hashProvider.generateHash(password)
         const user = await this.usersRepository.create({
             name,
             email,
