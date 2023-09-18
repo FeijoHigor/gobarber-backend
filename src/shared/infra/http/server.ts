@@ -15,7 +15,7 @@ AppDataSource.initialize().then(() => {
     
     app.use(routes)
     
-    app.use('/files', express.static(uploadConfig.directory))
+    app.use('/files', express.static(uploadConfig.uploadsFolder))
 
     app.use((err: Error, request: Request, response: Response, next: NextFunction) => {
         console.log('eitaaa')
