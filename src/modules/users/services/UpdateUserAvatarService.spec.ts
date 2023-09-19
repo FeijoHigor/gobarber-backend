@@ -6,13 +6,18 @@ import UpdateUserAvatarService from "./UpdateUserAvatarService";
 
 import AppError from "@shared/errors/AppError";
 
+let fakeUsersRepository: FakeUsersRepository
+let fakeStorageProvider: FakeStorageProvider
+let updateUserAvatar: UpdateUserAvatarService
+
 describe('UpdateUserAvatar', () => {
+    beforeEach(() => {
+        fakeUsersRepository = new FakeUsersRepository()
+        fakeStorageProvider = new FakeStorageProvider()
+        updateUserAvatar = new UpdateUserAvatarService(fakeUsersRepository, fakeStorageProvider)
+    })
+
     it('should be able to create a new user', async () => {
-        const fakeUsersRepository = new FakeUsersRepository()
-        const fakeStorageProvider = new FakeStorageProvider()
-
-        const updateUserAvatar = new UpdateUserAvatarService(fakeUsersRepository, fakeStorageProvider)
-
         const user = await fakeUsersRepository.create({
             name: 'John Doe',
             email: 'john.doe@gmail.com',
@@ -33,7 +38,7 @@ describe('UpdateUserAvatar', () => {
 
         const updateUserAvatar = new UpdateUserAvatarService(fakeUsersRepository, fakeStorageProvider)
 
-        expect(
+        await expect(
             updateUserAvatar.execute({
                 user_id: 'non-existing-user',
                 avatarFileName: 'avatar.jpg'
