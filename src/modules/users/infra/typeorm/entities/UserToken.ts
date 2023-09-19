@@ -1,5 +1,5 @@
-import { Entity, PrimaryGeneratedColumn, Column, Generated, OneToMany, JoinColumn } from 'typeorm'
-import Appointment from '@modules/appointments/infra/typeorm/entities/Appointment'
+import { Entity, PrimaryGeneratedColumn, Column, Generated, ManyToOne } from 'typeorm'
+import User from './User'
 
 @Entity('user_tokens')
 class UserToken {
@@ -10,7 +10,7 @@ class UserToken {
     @Generated('uuid')
     token: string
 
-    @Column()
+    @ManyToOne(() => User, user => user.id)
     user_id: string
 
     @Column({ default: () => 'CURRENT_TIMESTAMP' })

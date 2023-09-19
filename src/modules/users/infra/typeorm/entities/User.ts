@@ -1,5 +1,6 @@
-import { Entity, PrimaryGeneratedColumn, Column, OneToMany, JoinColumn } from 'typeorm'
+import { Entity, PrimaryGeneratedColumn, Column, OneToMany } from 'typeorm'
 import Appointment from '@modules/appointments/infra/typeorm/entities/Appointment'
+import UserToken from './UserToken'
 
 @Entity('users')
 class User {
@@ -17,6 +18,9 @@ class User {
 
     @OneToMany(() => Appointment, appointment => appointment.provider_id)
     appointments: Appointment[]
+
+    @OneToMany(() => UserToken, userToken => userToken.id)
+    token_id: string
 
     @Column({ nullable: true, type: 'varchar' })
     avatar: string
