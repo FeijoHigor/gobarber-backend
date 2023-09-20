@@ -5,7 +5,6 @@ import { container } from 'tsyringe'
 export default class SessionController {
     public async create(request: Request, response: Response) {
         const { email, password } = request.body
-        console.log(password, 'password')
 
         const authenticateUser = container.resolve(AuthenticateUserService)
     
